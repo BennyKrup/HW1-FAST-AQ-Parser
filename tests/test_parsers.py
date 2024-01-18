@@ -45,11 +45,11 @@ def test_FastaParser():
 
     with pytest.raises(ValueError) as info:
         FastaParser("data/empty.fa")
-        assert "Empty file" in str(info.value)
+    assert "Empty file" in str(info.value)
 
     with pytest.raises(ValueError) as info:
         FastaParser("data/bad.fa")
-        assert "non nucleotide in sequence line" in str(info.value)
+    assert "non nucleotide in sequence line" in str(info.value)
 
     
 
@@ -76,12 +76,12 @@ def test_FastqParser():
     """
     example_fastq = "data/test.fq"
     out_fastq = FastqParser(example_fastq)
-    assert parser.filename == example_fastq
+    assert out_fastq.filename == example_fastq
     Nucleotides = ["A", "C", "G", "T", "U"]
     # all characters allowed in fastq which are letters, numbers, and symbols
     chrs = set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~")
 
-    for seq in out_fastq:
+    for seq in parser:
         assert isinstance(seq[1], str)                  # the sequence is a string
 
         assert set(seq[1]).issubset(Nucleotides)        # all nucleotides are valid
@@ -101,8 +101,8 @@ def test_FastqFormat():
     """
     fastq = "data/test.fq"
     fasta = "data/test.fa"
-    out_fasta = FastaParser(fastq)
-    out_fastq = FastqParser(fasta)
+    out_fasta = list(FastaParser(fastq))
+    out_fastq = list(FastqParser(fasta))
     assert out_fasta[0][0] == None
     assert out_fastq[0][0] != None
     
