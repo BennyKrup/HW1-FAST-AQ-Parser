@@ -43,12 +43,14 @@ def test_FastaParser():
         assert seq[0] != ""                             # fasta header is not blank
         assert isinstance(seq[0], str)                  # the header is a string
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as possible_error:
         FastaParser("data/empty.fa")
 
-    with pytest.raises(ValueError):
-        FastaParser("data/bad.fa")
+    assert possible_error.type == ValueError
 
+    with pytest.raises(ValueError) as possible_error:
+        FastaParser("data/bad.fa")
+    assert possible_error.type == ValueError
     
 
 
@@ -61,8 +63,8 @@ def test_FastaFormat():
     fasta = "data/test.fa"
     out_fasta = list(FastaParser(fasta))
     out_fastq = list(FastaParser(fastq))
-    assert out_fasta[0][0] == None
-    assert out_fastq[0][0] != None
+    assert out_fasta[0][0] != None
+    assert out_fastq[0][0] == None
 
 
 
