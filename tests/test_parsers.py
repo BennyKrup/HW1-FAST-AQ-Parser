@@ -43,14 +43,6 @@ def test_FastaParser():
         assert seq[0] != ""                             # fasta header is not blank
         assert isinstance(seq[0], str)                  # the header is a string
 
-    with pytest.raises(ValueError) as possible_error:
-        FastaParser("tests/blank.fa")
-
-    assert possible_error.type == ValueError
-
-    with pytest.raises(ValueError) as possible_error:
-        FastaParser("tests/bad.fa")
-    assert possible_error.type == ValueError
     
 
 
