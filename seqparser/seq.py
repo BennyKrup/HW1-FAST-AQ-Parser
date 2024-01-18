@@ -10,7 +10,18 @@ def transcribe(seq: str, reverse: bool = False) -> str:
     Write a function that will transcribe (replace DNA sequence to RNA
     by replacing all 'T' to 'U') in an input sequence
     """
-    pass
+    # upper case nucleotides
+    seq = seq.upper()
+    # checking if all inputs are allowed nucleotides
+    if not set(seq).issubset(ALLOWED_NUC):
+        raise ValueError("Invalid nucleotide in sequence")
+    
+    transcribed = "".join([TRANSCRIPTION_MAPPING[nuc] for nuc in seq])
+    # reverse
+    if reverse:
+        transcribed = transcribed[::-1]
+    return transcribed
+
 
 def reverse_transcribe(seq: str) -> str:
     """
@@ -19,4 +30,5 @@ def reverse_transcribe(seq: str) -> str:
     """
     # Hey this is my comment
     # Again!
-    pass
+    seq = transcribe(seq, reverse=True) # transcribe and reverse
+    return seq
