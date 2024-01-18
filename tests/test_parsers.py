@@ -44,7 +44,7 @@ def test_FastaParser():
         assert isinstance(seq[0], str)                  # the header is a string
 
     with pytest.raises(ValueError) as possible_error:
-        FastaParser("data/empty.fa")
+        FastaParser("data/blank.fa")
 
     assert possible_error.type == ValueError
 
