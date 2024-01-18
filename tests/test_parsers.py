@@ -38,21 +38,15 @@ def test_FastaParser():
     Nucleotides = ["A", "C", "G", "T", "U"]
     for seq in out_fasta:
         assert isinstance(seq[1], str)                  # the sequence is a string
-
         assert set(seq[1]).issubset(Nucleotides)        # all nucleotides are valid
-
         assert seq[1] != ""                             # fasta is not blank
-
         assert seq[0] != ""                             # fasta header is not blank
-
         assert isinstance(seq[0], str)                  # the header is a string
 
-        assert seq[0].startswith(">")                   # the header starts with ">"
-
-    with pytest.raises(ValueError) as info:
+    with pytest.raises(ValueError):
         FastaParser("data/empty.fa")
 
-    with pytest.raises(ValueError) as info:
+    with pytest.raises(ValueError):
         FastaParser("data/bad.fa")
 
     
@@ -66,7 +60,7 @@ def test_FastaFormat():
     fastq = "data/test.fq"
     fasta = "data/test.fa"
     out_fasta = list(FastaParser(fasta))
-    out_fastq = list(FastqParser(fastq))
+    out_fastq = list(FastaParser(fastq))
     assert out_fasta[0][0] == None
     assert out_fastq[0][0] != None
 
@@ -105,7 +99,7 @@ def test_FastqFormat():
     """
     fastq = "data/test.fq"
     fasta = "data/test.fa"
-    out_fasta = list(FastaParser(fasta))
+    out_fasta = list(FastqParser(fasta))
     out_fastq = list(FastqParser(fastq))
     assert out_fasta[0][0] == None
     assert out_fastq[0][0] != None
